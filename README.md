@@ -39,4 +39,7 @@ The ServiceNow Word of the Day agent is a test prep tool for the ServiceNow Cert
 <img width="923" height="360" alt="email1" src="https://github.com/user-attachments/assets/5ac89d5d-adbf-4079-abd5-068e36af8ca1" /><br/><br/>
 
 - Once successfully executed, the agent sends the user an email with an appropriate phrase or term and its definition, on a daily basis.<br/>
-<img width="1097" height="422" alt="output" src="https://github.com/user-attachments/assets/33c66dbe-9578-44ab-ad3e-09466c90de36" />
+
+<img width="1097" height="422" alt="output" src="https://github.com/user-attachments/assets/33c66dbe-9578-44ab-ad3e-09466c90de36" /><br/><br/>
+<br/>
+Happy studying!
