@@ -34,7 +34,15 @@ The ServiceNow Word of the Day agent is a test prep tool for the ServiceNow Cert
 ````
 <img width="260" height="360" alt="output parser" src="https://github.com/user-attachments/assets/cb7881e3-e05c-4b2f-8565-8ca534be0af2" /><br/>
 - Finally, the agent's action is routed to send a message through a Gmail node. Here, the message is configured to convert the agent's JSON output to HTML, and structure it dynamically using JavaScript to allow for dynamic returns.
-<br/>
+
+
+````
+><h2>ServiceNow Term of the Day</h2> 
+><p><strong>Term:</strong>{{ $json.output.term }}</p> 
+><p><strong>Definition:</strong>{{ $json.output.definition }}</p> 
+><p><strong>Example:</strong>{{ $json.output.example }}</p>
+````
+
 <img width="250" height="380" alt="email" src="https://github.com/user-attachments/assets/7711af80-b617-41da-bc42-90f625bd4275" /><br/>
 <img width="923" height="360" alt="email1" src="https://github.com/user-attachments/assets/5ac89d5d-adbf-4079-abd5-068e36af8ca1" /><br/><br/>
 
