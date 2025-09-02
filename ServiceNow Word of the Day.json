@@ -1,0 +1,159 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a040e8ce-411d-40f6-9a9c-b1f25dd93866",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a ServiceNow guru, helping students study for the CSA and CAD. You should return a term that is valid and relevant in the **Yokohama release** only.\n\nMake sure you format your response as:\nTerm: [name]  \nDefinition: [1-2 sentence max]  \nExample: [realistic one line example of how it's used in ServiceNow]\n\nDO NOT include outdated terms and prioritize from the Yokohama release.\nFocus on terms specifically from the CSA and CAD exams.",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        144,
+        0
+      ],
+      "id": "f420902e-4e47-4a6a-81f3-8a38daef0370",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        96,
+        208
+      ],
+      "id": "a9fd64fc-ecd0-4f72-acda-b97f1c455355",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "0HyeJxD7hpp0QzLu",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "mprieto.kura@gmail.com",
+        "subject": "ServiceNow Word of the Day",
+        "message": "=<h2>ServiceNow Term of the Day</h2> \n<p><strong>Term:</strong>{{ $json.output.term }}</p> \n<p><strong>Definition:</strong>{{ $json.output.definition }}</p> \n<p><strong>Example:</strong>{{ $json.output.example }}</p> ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        496,
+        0
+      ],
+      "id": "ebb20e05-6715-4b30-a410-66eb2d9b9e5e",
+      "name": "Send a message",
+      "webhookId": "0d06385d-f676-4f0f-8cca-4c50339ece2d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "JgiLO4B5DpCWHeuZ",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"term\": \"CMDB\",\n  \"definition\": \"A centralized database that stores configuration items (CIs) and their relationships.\",\n  \"example\": \"Admins use the CMDB to assess the impact of a failed email server.\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        352,
+        208
+      ],
+      "id": "a4904c58-1852-438e-852f-1b35126e3d52",
+      "name": "Structured Output Parser"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fb8e8287-a165-4f34-82f3-9055f35f56f8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c4e155cb8c95e68ce9fbb5a0adc5ed2c95fc46243d3f546a340fb425d7d716b1"
+  },
+  "id": "rNG3bbZjKbJKzRsT",
+  "tags": []
+}
